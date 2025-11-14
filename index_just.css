@@ -12,7 +12,7 @@ body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
     color: #666;
-    overflow-x: hidden;
+    overflow-x: hidden; /* ВИПРАВЛЕННЯ: Запобігає горизонтальній прокрутці */
 }
 
 img {
@@ -31,9 +31,6 @@ a:hover {
     text-decoration: underline;
 }
 
-
-
-
 /* ===============================
    2. GLOBAL LAYOUT / CONTAINER
    =============================== */
@@ -41,7 +38,6 @@ a:hover {
 .main-container {
     max-width: 1200px;
     margin: 0 auto;
-    /* padding: 0 15px; */
 }
 
 /* ===============================
@@ -69,25 +65,8 @@ header.main-header {
 }
 
 main {
-    /* padding: 20px 40px; */
     max-width: 1200px;
     margin: 0 auto;
-}
-
-/* Стилі для мобільного меню-бургера (приховані на desktop) */
-.menu-toggle {
-    display: block;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-header.main-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
 }
 
 .intro-text {
@@ -102,6 +81,7 @@ header.main-header {
     letter-spacing: 2px;
 }
 
+/* Виправлений Toggle: Прибрано position: relative та left: 37% */
 .menu-toggle {
     display: flex;
     flex-direction: column;
@@ -111,8 +91,6 @@ header.main-header {
     background: none;
     border: none;
     cursor: pointer;
-    position: relative;
-    left: 37%;
 }
 
 /* Лінії бургера */
@@ -124,13 +102,11 @@ header.main-header {
     border-radius: 5px;
 }
 
-
-
 /* ===============================
    7. MEDIA QUERIES (Адаптивність)
    =============================== */
 
-/* Стилі для мобільного вигляду */
+/* Стилі для мобільного вигляду (max-width: 767px) */
 @media (max-width: 767px) {
     
     header.main-header {
@@ -146,55 +122,135 @@ header.main-header {
     }
 }
 
-/* Стилі для десктопного вигляду */
+/* Стилі для десктопного вигляду (min-width: 768px) */
 @media (min-width: 768px) {
 
+    .menu-toggle {
+        /* ВИПРАВЛЕННЯ: Повертаємо display: flex; для видимості на десктопі */
+        display: flex;
+        position: relative; 
+        left: 37%;
+    }
+    
     .main-nav {
         display: block; 
+    }
+    
+    main {
+        padding: 60px 80px;
+        max-width: 1400px;
+    }
+    
+    .layout-grid {
+        /* Прибираємо grid-template-columns, оскільки використовуємо position: absolute; */
+        position: relative;
+        min-height: 600px; /* ВИПРАВЛЕННЯ: Задаємо висоту для відштовхування футера */
+        display: block;
+    }
+
+    .image-wrapper, .intro-block, .experience-block {
+        margin: 0;
+        position: absolute;
+    }
+
+    .image-wrapper {
+        padding: 15px;
+    }
+
+    /* --- ПОЗИЦІОНУВАННЯ ДЕСКТОП --- */
+
+    /* Text Block - Top Left */
+    .intro-block {
+        width: 32%;
+        max-width: 400px;
+        top: 100px; /* Зміщено вниз */
+        left: 8%; /* Зсунуто від лівого краю */
+        z-index: 12;
+    }
+    
+    /* Image 1 - Art inspiration - Small image near text */
+    .image-1 {
+        width: 80%;
+        max-width: 250px;
+        top: 5%;
+        left: 95%;
+        z-index: 15;
+    }
+
+    /* Image 3 - Portrait with jacket - Large, Center-Left */
+    .image-3 {
+        width: 30%;
+        max-width: 500px;
+        top: 10%px; /* Зсунуто вниз */
+        right: 10%; 
+        z-index: 11;
+        transform: rotate(3deg);
+    }
+
+    /* Image 2 - Field photo - Bottom, overlapping image 3 */
+    .image-2 {
+        width: 30%;
+        max-width: 400px;
+        top: 23%; /* Зміщено нижче image-3 */
+        left: 15%;
+        bottom: auto;
+        z-index: 21;
+        transform: rotate(-5deg);
+    }
+
+    /* Experience Block - Right Side (Background/shadow added) */
+    .experience-block {
+        width: 35%; 
+        max-width: 450px;
+        top: 61%; /* Зміщено нижче image-1 */
+        right: 15%;
+        bottom: auto;
+        z-index: 25;
+        padding: 40px;
+    }
+        
+    .intro-block {
+        background-color: transparent;
+        padding: 0;
     }
 }
 
 /* ===============================
-   8. SCIENCE CONTENT SECTION (Mobile-First)
+   8. SCIENCE CONTENT SECTION (Mobile-First) - Тут стилі для центрування
    =============================== */
 .science-content-section {
     width: 100%;
-    /* padding-top: 20px; */
-    /* padding-bottom: 40px; */
+    /* ВИПРАВЛЕННЯ: Видалено left: 15%; */
+    padding-top: 20px;
+    padding-bottom: 40px;
 }
 
-/* Налаштування тексту 1 */
-.intro-block {
+/* ВИПРАВЛЕННЯ: Додано центрування для блоків контенту */
+.intro-block, .experience-block {
     margin-bottom: 30px;
-    padding: 0 10px; 
+    padding: 0 20px; /* Збільшено горизонтальний відступ */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.intro-text {
-    font-size: 1em;
-    color: #888;
-    line-height: 1.8;
-    margin-bottom: 30px;
-    font-style: italic;
-}
-
-/* Стилі для зображень */
+/* Зображення потрібно центрувати: */
 .image-wrapper {
     margin-bottom: 30px;
     background-color: #fff;
     padding: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* ВИПРАВЛЕННЯ: Додано центрування для image-wrapper */
+    max-width: 90%; 
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .image-wrapper:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-}
-
-/* Блок з досвідом */
-.experience-block {
-    padding: 0 10px; 
-    margin-bottom: 40px;
 }
 
 .experience-block h2 {
@@ -206,7 +262,6 @@ header.main-header {
     margin-bottom: 20px;
 }
 
-/* Активний елемент "LEARN MORE" */
 .learn-more-link {
     display: inline-block;
     font-size: 0.9em;
@@ -225,93 +280,6 @@ header.main-header {
     border-color: #000;
 }
 
-@media (min-width: 768px) {
-
-    .layout-grid {
-    position: relative;
-    /* Збільште це значення, щоб охопити всі нові елементи */
-    /* min-height: 800px;  */
-    /* Можливо, потрібно прибрати grid-template-columns, якщо ви використовуєте лише absolute */
-}
-    
-    main {
-        padding: 60px 80px;
-        max-width: 1400px;
-    }
-    
-    .layout-grid {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        gap: 20px;
-        position: relative;
-        min-height: 600px;
-    }
-
-    .image-wrapper, .intro-block, .experience-block {
-        margin: 0;
-        position: absolute;
-    }
-
-    .image-wrapper {
-        padding: 15px;
-    }
-
-    /* Text Block - Top Left */
-    .intro-block {
-        width: 32%;
-        max-width: 400px;
-        top: 10%;
-        left: 10%;
-        z-index: 12;
-        /* padding: 0; */
-    }
-    
-    /* Image 1 - Art inspiration - Small image near text */
-    .image-1 {
-        width: 80%;
-        /* max-width: 240px; */
-        top: 10%;
-        left: 100%;
-        /* z-index: 13; */
-       
-    }
-
-    /* Image 3 - Portrait with jacket - Large, Center-Left */
-    .image-3 {
-        width: 25%;
-        max-width: 550px;
-        top: 3%;
-        right: 20%;
-        z-index: 10;
-        transform: rotate(1.5deg);
-    }
-
-    /* Image 2 - Field photo - Bottom, overlapping image 3 */
-    .image-2 {
-        width: 35%;
-        max-width: 420px;
-        bottom: 5%;
-        left: 14%;
-        z-index: 21;
-        transform: rotate(-5deg);
-    }
-
-    /* Experience Block - Right Side */
-/* У блоці @media (min-width: 768px) */
-    .experience-block {
-        width: 30%; 
-        bottom: 3%; /* Позиціонування трохи нижче середини */
-        right: 18%;
-        z-index: 12; 
-    }
-        
-    .intro-block {
-        background-color: transparent;
-        padding: 0;
-    }
-    
-}
-
 /* ===============================
    9. FOOTER STYLES
    =============================== */
@@ -320,7 +288,7 @@ footer {
     color: #999;
     text-align: center;
     padding: 40px 20px;
-    /* margin-top: 80px; */
+    margin-top: 50px; /* ВИПРАВЛЕННЯ: Додано відступ зверху для відділення від контенту */
 }
 
 .sample-text {
